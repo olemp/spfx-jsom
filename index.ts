@@ -6,7 +6,8 @@ export default async function initJsom(url: string): Promise<JsomContext> {
     await SPComponentLoader.loadScript('/_layouts/15/MicrosoftAjax.js', { globalExportsName: 'Sys' });
     await SPComponentLoader.loadScript('/_layouts/15/SP.Runtime.js', { globalExportsName: 'SP' });
     await SPComponentLoader.loadScript('/_layouts/15/SP.js', { globalExportsName: 'SP' });
-    return await CreateJsomContext(url);
+    const jsomContext = await CreateJsomContext(url);
+    return jsomContext;
 }
 
 export { ExecuteJsomQuery, JsomContext };
