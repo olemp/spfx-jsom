@@ -1,6 +1,6 @@
 {
   "name": "spfx-jsom",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simplifies JSOM for SPFx",
   "main": "index.js",
   "types": "index.d.ts",
@@ -20,7 +20,7 @@
   "homepage": "https://github.com/olemp/spfx-jsom#readme",
   "dependencies": {
     "@microsoft/sp-loader": "^1.4.0",
-    "jsom-ctx": "^1.0.7"
+    "jsom-ctx": "^1.0.8"
   },
   "devDependencies": {
     "@types/microsoft-ajax": "0.0.33",
