@@ -38,6 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var sp_loader_1 = require("@microsoft/sp-loader");
 var jsom_ctx_1 = require("jsom-ctx");
 exports.ExecuteJsomQuery = jsom_ctx_1.ExecuteJsomQuery;
+exports.JsomContext = jsom_ctx_1.JsomContext;
 function initJsom(url) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {

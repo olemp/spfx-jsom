@@ -9,4 +9,4 @@ export default async function initJsom(url: string): Promise<JsomContext> {
     return await CreateJsomContext(url);
 }
 
-export { ExecuteJsomQuery };
+export { ExecuteJsomQuery, JsomContext };
