@@ -1,4 +1,5 @@
 # spfx-jsom
+Use JSOM in SPFx with `async-await`. `spfx-jsom` takes care of loading the required SP libs.
 
 ## Install
 ```powershell
