@@ -13,7 +13,7 @@ import initSpfxJsom, { ExecuteJsomQuery, JsomContext } from "spfx-jsom";
 
 ## Sample 1 - Get all web properties
 ```typescript
-private async getAllWebProperties() {
+async function getAllWebProperties() {
     try {
       const jsomCtx: JsomContext = await initSpfxJsom([SITE_URL]);
       const webAllProperties = jsomCtx.web.get_allProperties();
