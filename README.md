@@ -14,9 +14,9 @@ import initSpfxJsom, { ExecuteJsomQuery, JsomContext } from "spfx-jsom";
 ```javascript
 private async getAllWebProperties() {
     try {
-      const _jsomCtx = await initSpfxJsom([SITE_URL]);
-      const webAllProperties = this._jsomCtx.web.get_allProperties();
-      await ExecuteJsomQuery(this._jsomCtx, [{ clientObject: webAllProperties }]);
+      const jsomCtx = await initSpfxJsom([SITE_URL]);
+      const webAllProperties = jsomCtx.web.get_allProperties();
+      await ExecuteJsomQuery(jsomCtx, [{ clientObject: webAllProperties }]);
       return webAllProperties.get_fieldValues();
     } catch (err) {
       throw err;
