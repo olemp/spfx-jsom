@@ -39,9 +39,8 @@ var sp_loader_1 = require("@microsoft/sp-loader");
 var jsom_ctx_1 = require("jsom-ctx");
 exports.ExecuteJsomQuery = jsom_ctx_1.ExecuteJsomQuery;
 exports.JsomContext = jsom_ctx_1.JsomContext;
-function initJsom(url, loadTaxonomy, loadPublishing) {
-    if (loadTaxonomy === void 0) { loadTaxonomy = false; }
-    if (loadPublishing === void 0) { loadPublishing = false; }
+function initSpxJsom(url, options) {
+    if (options === void 0) { options = {}; }
     return __awaiter(this, void 0, void 0, function () {
         var jsomContext;
         return __generator(this, function (_a) {
@@ -58,13 +57,13 @@ function initJsom(url, loadTaxonomy, loadPublishing) {
                     return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/SP.js', { globalExportsName: 'SP' })];
                 case 4:
                     _a.sent();
-                    if (!loadTaxonomy) return [3 /*break*/, 6];
+                    if (!options.loadTaxonomy) return [3 /*break*/, 6];
                     return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/SP.Taxonomy.js', { globalExportsName: 'SP.Taxonomy' })];
                 case 5:
                     _a.sent();
                     _a.label = 6;
                 case 6:
-                    if (!loadPublishing) return [3 /*break*/, 8];
+                    if (!options.loadPublishing) return [3 /*break*/, 8];
                     return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/SP.Publishing.js', { globalExportsName: 'SP.Publishing' })];
                 case 7:
                     _a.sent();
@@ -77,5 +76,5 @@ function initJsom(url, loadTaxonomy, loadPublishing) {
         });
     });
 }
-exports.default = initJsom;
+exports.default = initSpxJsom;
 //# sourceMappingURL=index.js.map

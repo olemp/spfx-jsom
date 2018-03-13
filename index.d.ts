@@ -1,3 +1,7 @@
 import { ExecuteJsomQuery, JsomContext } from "jsom-ctx";
-export default function initJsom(url: string, loadTaxonomy?: boolean, loadPublishing?: boolean): Promise<JsomContext>;
+export interface ISpfxJsomOptions {
+    loadPublishing?: boolean;
+    loadTaxonomy?: boolean;
+}
+export default function initSpxJsom(url: string, options?: ISpfxJsomOptions): Promise<JsomContext>;
 export { ExecuteJsomQuery, JsomContext };
