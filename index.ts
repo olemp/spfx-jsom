@@ -6,19 +6,35 @@ export interface ISpfxJsomOptions {
     loadTaxonomy?: boolean;
 }
 
-export default async function initSpxJsom(url: string, options: ISpfxJsomOptions = {}): Promise<JsomContext> {
+export interface ISpfxJsomContext {
+    jsomContext: JsomContext;
+    defaultTermStore?: SP.Taxonomy.TermStore;
+}
+
+/**
+ * Initialize JSOM context for SharePoint Framework
+ * 
+ * @param {string} url Url
+ * @param {ISpfxJsomOptions} options Options 
+ */
+export default async function initSpxJsom(url: string, { loadPublishing, loadTaxonomy }: ISpfxJsomOptions = {}): Promise<ISpfxJsomContext> {
     await SPComponentLoader.loadScript('/_layouts/15/init.js', { globalExportsName: '$_global_init' });
     await SPComponentLoader.loadScript('/_layouts/15/MicrosoftAjax.js', { globalExportsName: 'Sys' });
     await SPComponentLoader.loadScript('/_layouts/15/SP.Runtime.js', { globalExportsName: 'SP' });
     await SPComponentLoader.loadScript('/_layouts/15/SP.js', { globalExportsName: 'SP' });
-    if (options.loadTaxonomy) {
-        await SPComponentLoader.loadScript('/_layouts/15/SP.Taxonomy.js', { globalExportsName: 'SP.Taxonomy' });
+    if (loadTaxonomy) {
+        await SPComponentLoader.loadScript('/_layouts/15/SP.Taxonomy.js', { globalExportsName: 'SP' });
     }
-    if (options.loadPublishing) {
-        await SPComponentLoader.loadScript('/_layouts/15/SP.Publishing.js', { globalExportsName: 'SP.Publishing' });
+    if (loadPublishing) {
+        await SPComponentLoader.loadScript('/_layouts/15/SP.Publishing.js', { globalExportsName: 'SP' });
     }
     const jsomContext = await CreateJsomContext(url);
-    return jsomContext;
+    if (loadTaxonomy) {
+        const taxSession = SP.Taxonomy.TaxonomySession.getTaxonomySession(jsomContext.clientContext);
+        const defaultTermStore = taxSession.getDefaultSiteCollectionTermStore();
+        return { jsomContext, defaultTermStore };
+    }
+    return { jsomContext };
 }
 
 export { ExecuteJsomQuery, JsomContext };

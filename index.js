@@ -14,8 +14,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
         while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
                 case 4: _.label++; return { value: op[1], done: false };
@@ -39,39 +39,50 @@ var sp_loader_1 = require("@microsoft/sp-loader");
 var jsom_ctx_1 = require("jsom-ctx");
 exports.ExecuteJsomQuery = jsom_ctx_1.ExecuteJsomQuery;
 exports.JsomContext = jsom_ctx_1.JsomContext;
-function initSpxJsom(url, options) {
-    if (options === void 0) { options = {}; }
+/**
+ * Initialize JSOM context for SharePoint Framework
+ *
+ * @param {string} url Url
+ * @param {ISpfxJsomOptions} options Options
+ */
+function initSpxJsom(url, _a) {
+    var _b = _a === void 0 ? {} : _a, loadPublishing = _b.loadPublishing, loadTaxonomy = _b.loadTaxonomy;
     return __awaiter(this, void 0, void 0, function () {
-        var jsomContext;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var jsomContext, taxSession, defaultTermStore;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0: return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/init.js', { globalExportsName: '$_global_init' })];
                 case 1:
-                    _a.sent();
+                    _c.sent();
                     return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/MicrosoftAjax.js', { globalExportsName: 'Sys' })];
                 case 2:
-                    _a.sent();
+                    _c.sent();
                     return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/SP.Runtime.js', { globalExportsName: 'SP' })];
                 case 3:
-                    _a.sent();
+                    _c.sent();
                     return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/SP.js', { globalExportsName: 'SP' })];
                 case 4:
-                    _a.sent();
-                    if (!options.loadTaxonomy) return [3 /*break*/, 6];
-                    return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/SP.Taxonomy.js', { globalExportsName: 'SP.Taxonomy' })];
+                    _c.sent();
+                    if (!loadTaxonomy) return [3 /*break*/, 6];
+                    return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/SP.Taxonomy.js', { globalExportsName: 'SP' })];
                 case 5:
-                    _a.sent();
-                    _a.label = 6;
+                    _c.sent();
+                    _c.label = 6;
                 case 6:
-                    if (!options.loadPublishing) return [3 /*break*/, 8];
-                    return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/SP.Publishing.js', { globalExportsName: 'SP.Publishing' })];
+                    if (!loadPublishing) return [3 /*break*/, 8];
+                    return [4 /*yield*/, sp_loader_1.SPComponentLoader.loadScript('/_layouts/15/SP.Publishing.js', { globalExportsName: 'SP' })];
                 case 7:
-                    _a.sent();
-                    _a.label = 8;
+                    _c.sent();
+                    _c.label = 8;
                 case 8: return [4 /*yield*/, jsom_ctx_1.CreateJsomContext(url)];
                 case 9:
-                    jsomContext = _a.sent();
-                    return [2 /*return*/, jsomContext];
+                    jsomContext = _c.sent();
+                    if (loadTaxonomy) {
+                        taxSession = SP.Taxonomy.TaxonomySession.getTaxonomySession(jsomContext.clientContext);
+                        defaultTermStore = taxSession.getDefaultSiteCollectionTermStore();
+                        return [2 /*return*/, { jsomContext: jsomContext, defaultTermStore: defaultTermStore }];
+                    }
+                    return [2 /*return*/, { jsomContext: jsomContext }];
             }
         });
     });
